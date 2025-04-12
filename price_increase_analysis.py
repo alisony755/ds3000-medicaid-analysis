@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-# Load the dataset (assuming it's already been generated in File 1)
+# Load the dataset
 drug_df = pd.read_csv('drug_data.csv')
 
 # Create column to store price change data
