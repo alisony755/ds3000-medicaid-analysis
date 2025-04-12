@@ -1,3 +1,5 @@
+# Read in the Medicaid Spending by Drug data from Data.CMS.gov
+
 # Import libraries
 import requests
 from bs4 import BeautifulSoup
