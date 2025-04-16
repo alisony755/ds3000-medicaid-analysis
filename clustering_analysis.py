@@ -11,9 +11,13 @@ import plotly.express as px
 drug_df = pd.read_csv('drug_data.csv')
 
 # Clustering features
-clustering_features = ['medicaid_spending_2018', 'medicaid_spending_2019', 
-                       'medicaid_spending_2020', 'medicaid_spending_2021', 
-                       'medicaid_spending_2022']
+clustering_features = [
+    'medicaid_spending_2018',
+    'medicaid_spending_2019',
+    'medicaid_spending_2020',
+    'medicaid_spending_2021',
+    'medicaid_spending_2022'
+]
 
 # Preprocess data for clustering
 df_cluster = drug_df.dropna(subset=clustering_features)
@@ -34,12 +38,34 @@ df_cluster['pca1'] = X_pca[:, 0]
 df_cluster['pca2'] = X_pca[:, 1]
 
 # Create the scatter plot
-fig = px.scatter(df_cluster,
-                 x='pca1', 
-                 y='pca2', 
-                 color='kmeans_cluster', 
-                 hover_data=['company'],
-                 title="Clustering of Pharmaceutical Companies based on Medicaid Spending",
-                 color_continuous_scale='Viridis')
+fig = px.scatter(df_subset,
+                 x='pca1',
+                 y='pca2',
+                 color='cluster_label',
+                 hover_data='company',
+                 title='Comparison of Medicaid Drug Spending Per Drug Across Companies (2018–2022)',
+                 labels={
+                     'pca1': 'Principal Component 1',
+                     'pca2': 'Principal Component 2',
+                     'cluster_label': 'Cluster Label'
+                     },
+                 color_discrete_sequence=['#478ce6', '#f74a7e', '#37ad82'])
+
+# Set plot size
+fig.update_layout(width=1300, height=600)
+
+# Increase marker size and decrease opacity
+fig.update_traces(marker=dict(size=15, opacity=0.7))
+
+# Update font sizes
+fig.update_layout(
+    title_font=dict(size=24),
+    legend_title_font=dict(size=20),
+    legend_font=dict(size=16),
+    xaxis_title_font=dict(size=20),
+    yaxis_title_font=dict(size=20),
+    xaxis_tickfont=dict(size=16),
+    yaxis_tickfont=dict(size=16)
+)
 
 fig.show()
